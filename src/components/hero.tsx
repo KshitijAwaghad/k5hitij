@@ -14,7 +14,7 @@ import {
   RotateCw,
   Terminal,
 } from "lucide-react";
-import { playClick, playSuccess } from "@/lib/sound";
+import { playClick, playSuccess, playKeypress } from "@/lib/sound";
 
 const emptySubscribe = () => () => {};
 
@@ -31,6 +31,9 @@ export function Hero() {
   const [copiedCode, setCopiedCode] = React.useState(false);
   const [activeTab, setActiveTab] = React.useState<"config" | "package" | "output">("config");
   const [runTimestamp, setRunTimestamp] = React.useState<string>("just now");
+  const [isRunning, setIsRunning] = React.useState<boolean>(false);
+  const [visibleStepCount, setVisibleStepCount] = React.useState<number>(5);
+  const timeoutRefs = React.useRef<NodeJS.Timeout[]>([]);
 
   // Typing effect for the terminal prompt
   React.useEffect(() => {
@@ -92,10 +95,66 @@ export function Hero() {
   }
 }`;
 
+  const EXECUTION_STEPS = React.useMemo(() => [
+    {
+      label: "[1/4] Parsing TypeScript AST & checking type contracts...",
+      detail: "✔ 0 errors (strict mode)",
+      color: "text-foreground/75",
+    },
+    {
+      label: "[2/4] Resolving workspace packages & dependencies...",
+      detail: "✔ ExpenseWise, CampusResolve, k5hitij.dev",
+      color: "text-sky-300",
+    },
+    {
+      label: `[3/4] Initializing developer instance: ${siteData.owner.name} (@${siteData.owner.handle})...`,
+      detail: `✔ Status: ${siteData.owner.statusBadge}`,
+      color: "text-emerald-400",
+    },
+    {
+      label: "[4/4] Syncing GitHub telemetry & recent activity...",
+      detail: "✔ 23 commits verified (2026)",
+      color: "text-foreground/80",
+    },
+    {
+      label: "✨ Compilation complete (Exit code 0 in 28ms).",
+      detail: "System operational & available for hire.",
+      color: "text-accent font-semibold",
+    },
+  ], []);
+
+  React.useEffect(() => {
+    return () => {
+      timeoutRefs.current.forEach((t) => clearTimeout(t));
+    };
+  }, []);
+
   const handleRun = () => {
-    playSuccess();
+    if (isRunning) return;
+    timeoutRefs.current.forEach((t) => clearTimeout(t));
+    timeoutRefs.current = [];
+
+    setIsRunning(true);
     setActiveTab("output");
-    setRunTimestamp(new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit", second: "2-digit" }));
+    setVisibleStepCount(0);
+    playClick();
+
+    const delays = [250, 600, 950, 1300, 1650];
+    delays.forEach((delay, idx) => {
+      const t = setTimeout(() => {
+        setVisibleStepCount(idx + 1);
+        if (idx === delays.length - 1) {
+          setIsRunning(false);
+          setRunTimestamp(
+            new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit", second: "2-digit" })
+          );
+          playSuccess();
+        } else {
+          playKeypress();
+        }
+      }, delay);
+      timeoutRefs.current.push(t);
+    });
   };
 
   const copyCode = async () => {
@@ -104,7 +163,7 @@ export function Hero() {
         activeTab === "package"
           ? packageJsonSnippet
           : activeTab === "output"
-          ? "Execution log: Exit Code 0"
+          ? "Execution log: Exit Code 0 - System Operational"
           : tsCodeSnippet;
       await navigator.clipboard.writeText(content);
       playSuccess();
@@ -272,12 +331,22 @@ export function Hero() {
                 <div className="flex items-center gap-1.5 shrink-0">
                   <button
                     type="button"
+                    disabled={isRunning}
                     onClick={handleRun}
-                    className="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-accent/15 border border-accent/40 text-accent hover:bg-accent hover:text-black font-mono text-[10px] font-bold transition-all shadow-xs"
+                    className="inline-flex items-center gap-1 px-2.5 py-1 rounded bg-accent/15 border border-accent/40 text-accent hover:bg-accent hover:text-black font-mono text-[10px] font-bold transition-all shadow-xs disabled:opacity-60 cursor-pointer"
                     title="Execute TypeScript runtime"
                   >
-                    <Play className="w-2.5 h-2.5 fill-current" />
-                    <span>Run ▶</span>
+                    {isRunning ? (
+                      <>
+                        <RotateCw className="w-2.5 h-2.5 animate-spin text-accent" />
+                        <span>Compiling...</span>
+                      </>
+                    ) : (
+                      <>
+                        <Play className="w-2.5 h-2.5 fill-current" />
+                        <span>Run ▶</span>
+                      </>
+                    )}
                   </button>
 
                   <button
@@ -446,48 +515,49 @@ export function Hero() {
               {/* Tab 3: Interactive Runtime Output Console */}
               {activeTab === "output" && (
                 <div className="p-4 sm:p-5 font-mono text-xs leading-relaxed overflow-x-auto select-text bg-[#06080b] min-h-[300px] flex flex-col justify-between">
-                  <div className="space-y-1.5 font-mono text-[11px]">
-                    <div className="flex items-center gap-2 text-foreground/50 pb-1 border-b border-surface-border/40">
-                      <span className="text-accent">&gt;</span>
-                      <span className="text-foreground/90">bun run developer.config.ts</span>
-                      <span className="text-accent ml-auto text-[10px]">[OK] 0 errors</span>
+                  <div className="space-y-2 font-mono text-[11px]">
+                    <div className="flex items-center justify-between pb-1.5 border-b border-surface-border/40 text-foreground/50">
+                      <div className="flex items-center gap-2">
+                        <span className="text-accent font-bold">&gt;</span>
+                        <span className="text-foreground/90 font-mono">bun run developer.config.ts</span>
+                      </div>
+                      <span className={`text-[10px] font-mono ${isRunning ? "text-amber-400 animate-pulse font-semibold" : "text-accent"}`}>
+                        {isRunning ? "compiling..." : "[OK] 0 errors"}
+                      </span>
                     </div>
 
-                    <p className="text-foreground/60 pt-1">
-                      [runtime] Next.js 16.4.0 (Turbopack) • Engine Node.js 20.x
-                    </p>
-                    <p className="text-emerald-400">
-                      ✔ Developer Initialized: <strong>{siteData.owner.name}</strong> (@{siteData.owner.handle})
-                    </p>
-                    <p className="text-foreground/80">
-                      ✔ Status: <span className="text-accent font-semibold">{siteData.owner.statusBadge}</span>
-                    </p>
+                    <div className="space-y-2 pt-1">
+                      {EXECUTION_STEPS.slice(0, visibleStepCount).map((step, idx) => (
+                        <div key={idx} className={`space-y-0.5 ${step.color} transition-all`}>
+                          <div className="flex items-center gap-1.5 font-medium">
+                            <span>{step.label}</span>
+                          </div>
+                          <div className="pl-4 text-[10.5px] opacity-90">
+                            {step.detail}
+                          </div>
+                        </div>
+                      ))}
 
-                    <div className="pt-1.5 space-y-0.5 text-foreground/85">
-                      <p className="text-sky-300">✔ Pinned Core Projects Loaded:</p>
-                      <p className="pl-4 text-foreground/75">▸ ExpenseWise [Next.js, Prisma, PostgreSQL]</p>
-                      <p className="pl-4 text-foreground/75">▸ k5hitij.dev [Next.js App Router, Tailwind, cmdk]</p>
-                      <p className="pl-4 text-foreground/75">▸ CampusResolve [React, Express, MongoDB]</p>
+                      {isRunning && (
+                        <div className="flex items-center gap-2 text-accent text-[11px] pt-1 font-mono animate-pulse">
+                          <RotateCw className="w-3 h-3 animate-spin shrink-0" />
+                          <span>Executing build AST pipeline...</span>
+                        </div>
+                      )}
                     </div>
-
-                    <p className="text-foreground/80 pt-1">
-                      ✔ Telemetry: <strong>23 commits synced</strong> with @KshitijAwaghad (2026)
-                    </p>
-                    <p className="text-accent pt-1 font-semibold">
-                      ✨ System operational. Ready for engineering collaborations.
-                    </p>
                   </div>
 
                   {/* Rerun quick bar */}
                   <div className="pt-3 border-t border-surface-border/40 flex items-center justify-between text-[10px] text-foreground/50">
-                    <span>Executed: {runTimestamp}</span>
+                    <span>{isRunning ? "Compiling live..." : `Executed: ${runTimestamp}`}</span>
                     <button
                       type="button"
+                      disabled={isRunning}
                       onClick={handleRun}
-                      className="inline-flex items-center gap-1 text-accent hover:underline font-mono"
+                      className="inline-flex items-center gap-1 text-accent hover:underline font-mono disabled:opacity-50 cursor-pointer"
                     >
-                      <RotateCw className="w-2.5 h-2.5" />
-                      <span>Rerun code</span>
+                      <RotateCw className={`w-2.5 h-2.5 ${isRunning ? "animate-spin" : ""}`} />
+                      <span>{isRunning ? "Running..." : "Rerun code"}</span>
                     </button>
                   </div>
                 </div>
