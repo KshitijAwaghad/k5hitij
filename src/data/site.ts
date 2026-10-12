@@ -187,7 +187,7 @@ export const siteData: SiteConfig = {
       tech: ["TypeScript", "Next.js", "Tailwind CSS", "Prisma", "PostgreSQL"],
       links: {
         github: "https://github.com/KshitijAwaghad/ExpenseWise",
-        live: undefined,
+        live: "https://expensewise-rho.vercel.app",
       },
       caseStudy: {
         problem: "Users often find budgeting tools either overwhelmingly complex or lacking real-time transactional clarity. ExpenseWise was built to eliminate manual friction while providing instant insights into recurring spending.",
@@ -314,7 +314,7 @@ export const siteData: SiteConfig = {
       tech: ["TypeScript", "React", "Node.js", "Express", "MongoDB"],
       links: {
         github: "https://github.com/KshitijAwaghad/CampusResolve",
-        live: "https://campus-resolve-nine.vercel.app",
+        live: undefined,
       },
       caseStudy: {
         problem: "Traditional grievance systems in educational campuses rely on fragmented email threads or manual paperwork, leading to lost inquiries and zero status visibility for students.",
