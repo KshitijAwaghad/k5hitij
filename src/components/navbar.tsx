@@ -35,9 +35,6 @@ export function Navbar() {
           >
             <span className="text-accent">&gt;</span>
             <span>{siteData.owner.handle}</span>
-            <span className="text-muted text-xs hidden sm:inline group-hover:text-foreground transition-colors">
-              .dev
-            </span>
           </Link>
 
           {/* Availability Beacon */}
@@ -54,8 +51,8 @@ export function Navbar() {
         </div>
 
         {/* Desktop Nav Links */}
-        <nav className="hidden lg:flex items-center gap-6 text-xs font-mono text-foreground/75">
-          {siteData.navLinks.slice(0, 5).map((link) => (
+        <nav className="hidden lg:flex items-center gap-5 xl:gap-6 text-xs font-mono text-foreground/75">
+          {siteData.navLinks.map((link) => (
             <a
               key={link.label}
               href={link.href}
