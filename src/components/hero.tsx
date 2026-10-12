@@ -139,7 +139,8 @@ export function Hero() {
     setVisibleStepCount(0);
     playClick();
 
-    const delays = [250, 600, 950, 1300, 1650];
+    // Slowed down by 75% (4x duration) to allow each line to be comfortably read
+    const delays = [1000, 2400, 3800, 5200, 6600];
     delays.forEach((delay, idx) => {
       const t = setTimeout(() => {
         setVisibleStepCount(idx + 1);
