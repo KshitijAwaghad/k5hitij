@@ -273,155 +273,156 @@ export async function GitHubActivity() {
           </a>
         </div>
 
-        {/* Authentic Contribution Graph Box */}
-        <div className="p-4 sm:p-6 rounded-xl border border-surface-border bg-surface/70 backdrop-blur-sm space-y-4 mb-6 shadow-sm">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-surface-border/60 font-mono text-xs">
-            <div className="flex items-center gap-2.5">
-              <Activity className="w-4 h-4 text-accent" />
-              <span className="font-semibold text-foreground">Contribution Heatmap</span>
-              <span className="px-2 py-0.5 rounded text-[10px] bg-accent/10 text-accent border border-accent/20 flex items-center gap-1">
-                <CheckCircle2 className="w-3 h-3 text-accent" />
-                <span>{isLive ? "Live Profile Synced" : "Verified Profile Data"}</span>
-              </span>
-            </div>
-
-            <div className="flex items-center gap-4 text-foreground/70 text-xs">
-              <span className="flex items-center gap-1.5 font-sans">
-                <Flame className="w-3.5 h-3.5 text-accent" />
-                <span>
-                  <strong className="font-bold text-foreground font-mono">{totalCount}</strong> contributions in the last year
+        {/* 2-Column Layout: Column 1 = Contribution Heatmap, Column 2 = 3 Pinned Projects */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-stretch">
+          {/* Column 1: Contribution Heatmap */}
+          <div className="lg:col-span-7 p-4 sm:p-5 rounded-xl border border-surface-border bg-surface/70 backdrop-blur-sm flex flex-col justify-between space-y-4 shadow-sm">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-surface-border/60 font-mono text-xs">
+              <div className="flex items-center gap-2">
+                <Activity className="w-4 h-4 text-accent" />
+                <span className="font-semibold text-foreground">Contribution Heatmap</span>
+                <span className="px-2 py-0.5 rounded text-[10px] bg-accent/10 text-accent border border-accent/20 flex items-center gap-1">
+                  <CheckCircle2 className="w-3 h-3 text-accent" />
+                  <span>{isLive ? "Live Synced" : "Verified Data"}</span>
                 </span>
-              </span>
-            </div>
-          </div>
-
-          {/* GitHub-Authentic Heatmap Grid with Month & Day Labels */}
-          <div className="overflow-x-auto pb-2">
-            <div className="min-w-[760px] select-none font-mono text-[10px]">
-              {/* Month Header Row */}
-              <div className="flex pl-8 mb-2 text-foreground/50 h-4 relative">
-                {months.map((m, idx) => (
-                  <div
-                    key={idx}
-                    className="absolute"
-                    style={{ left: `${m.weekIndex * 14 + 32}px` }}
-                  >
-                    {m.label}
-                  </div>
-                ))}
               </div>
 
-              {/* Days + Grid Matrix */}
-              <div className="flex gap-2">
-                {/* Day Labels (Mon, Wed, Fri) */}
-                <div className="flex flex-col justify-between text-foreground/40 text-[9px] pt-1 pb-1 w-6 select-none leading-none">
-                  <span className="h-2.5"></span>
-                  <span className="h-2.5">Mon</span>
-                  <span className="h-2.5"></span>
-                  <span className="h-2.5">Wed</span>
-                  <span className="h-2.5"></span>
-                  <span className="h-2.5">Fri</span>
-                  <span className="h-2.5"></span>
-                </div>
+              <div className="flex items-center gap-2 text-foreground/70 text-xs font-sans">
+                <Flame className="w-3.5 h-3.5 text-accent" />
+                <span>
+                  <strong className="font-bold text-foreground font-mono">{totalCount}</strong> commits in last year
+                </span>
+              </div>
+            </div>
 
-                {/* Weeks Columns */}
-                <div className="inline-flex gap-[3px]">
-                  {weeks.map((week, wIndex) => (
-                    <div key={wIndex} className="flex flex-col gap-[3px]">
-                      {week.map((day, dIndex) => {
-                        if (!day) {
-                          return <div key={dIndex} className="w-2.5 h-2.5 opacity-0" />;
-                        }
-
-                        const tooltipText = `${day.count === 0 ? "No contributions" : `${day.count} contribution${day.count > 1 ? "s" : ""}`} on ${formatDate(day.date)}`;
-
-                        return (
-                          <div
-                            key={dIndex}
-                            title={tooltipText}
-                            className={`w-2.5 h-2.5 rounded-[2px] border transition-transform hover:scale-125 cursor-pointer ${getCellColor(
-                              day.level
-                            )}`}
-                          />
-                        );
-                      })}
+            {/* GitHub-Authentic Heatmap Grid with Month & Day Labels */}
+            <div className="overflow-x-auto pb-1">
+              <div className="min-w-[590px] select-none font-mono text-[9px]">
+                {/* Month Header Row */}
+                <div className="flex pl-6 mb-1 text-foreground/50 h-3.5 relative">
+                  {months.map((m, idx) => (
+                    <div
+                      key={idx}
+                      className="absolute"
+                      style={{ left: `${m.weekIndex * 11 + 24}px` }}
+                    >
+                      {m.label}
                     </div>
                   ))}
                 </div>
-              </div>
-            </div>
-          </div>
 
-          {/* Legend and Sync Note */}
-          <div className="flex items-center justify-between text-[11px] font-mono text-foreground/50 pt-2 border-t border-surface-border/40">
-            <div className="flex items-center gap-2">
-              <span className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse" />
-              <span>Full 52-week activity calendar</span>
-            </div>
-            <div className="flex items-center gap-1.5">
-              <span>Less</span>
-              <span className="w-2.5 h-2.5 rounded-[2px] bg-surface-muted/70 border border-surface-border/50" />
-              <span className="w-2.5 h-2.5 rounded-[2px] bg-[#0e4429] border border-[#006d32]/50" />
-              <span className="w-2.5 h-2.5 rounded-[2px] bg-[#006d32] border border-[#26a641]/50" />
-              <span className="w-2.5 h-2.5 rounded-[2px] bg-[#26a641] border border-[#39d353]/60" />
-              <span className="w-2.5 h-2.5 rounded-[2px] bg-[#39d353] border border-[#39d353]" />
-              <span>More</span>
-            </div>
-          </div>
-        </div>
-
-        {/* Pinned 3 Core Repositories Cards in Exact Order */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-          {repos.map((repo, idx) => (
-            <div
-              key={repo.name}
-              className="p-4 sm:p-5 rounded-xl border border-surface-border bg-surface/70 backdrop-blur-sm flex flex-col justify-between hover:border-accent/40 hover:bg-surface transition-all group"
-            >
-              <div className="space-y-2.5">
-                <div className="flex items-start justify-between gap-2">
-                  <div className="flex items-center gap-2 font-mono text-xs font-bold text-foreground group-hover:text-accent transition-colors">
-                    <span className="text-[10px] text-accent font-mono px-1.5 py-0.5 rounded bg-accent/10 border border-accent/20">
-                      0{idx + 1}
-                    </span>
-                    <GitBranch className="w-3.5 h-3.5 text-accent" />
-                    <span className="truncate">{repo.name}</span>
+                {/* Days + Grid Matrix */}
+                <div className="flex gap-1.5">
+                  {/* Day Labels (Mon, Wed, Fri) */}
+                  <div className="flex flex-col justify-between text-foreground/40 text-[8px] pt-0.5 pb-0.5 w-5 select-none leading-none">
+                    <span className="h-2"></span>
+                    <span className="h-2">Mon</span>
+                    <span className="h-2"></span>
+                    <span className="h-2">Wed</span>
+                    <span className="h-2"></span>
+                    <span className="h-2">Fri</span>
+                    <span className="h-2"></span>
                   </div>
-                  <a
-                    href={repo.html_url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-foreground/40 hover:text-accent p-1"
-                    title={`Open ${repo.name} on GitHub`}
-                    aria-label={`Open ${repo.name} on GitHub`}
-                  >
-                    <ExternalLink className="w-3.5 h-3.5" />
-                  </a>
-                </div>
 
-                <p className="text-xs text-foreground/70 line-clamp-3 leading-relaxed font-sans">
-                  {repo.description}
-                </p>
-              </div>
+                  {/* Weeks Columns */}
+                  <div className="inline-flex gap-[2px]">
+                    {weeks.map((week, wIndex) => (
+                      <div key={wIndex} className="flex flex-col gap-[2px]">
+                        {week.map((day, dIndex) => {
+                          if (!day) {
+                            return <div key={dIndex} className="w-2 h-2 opacity-0" />;
+                          }
 
-              <div className="pt-3 border-t border-surface-border/60 flex items-center justify-between text-[11px] font-mono text-foreground/60 mt-3">
-                <div className="flex items-center gap-2">
-                  <span className="w-2 h-2 rounded-full bg-accent inline-block" />
-                  <span>{repo.language}</span>
-                </div>
+                          const tooltipText = `${day.count === 0 ? "No contributions" : `${day.count} contribution${day.count > 1 ? "s" : ""}`} on ${formatDate(day.date)}`;
 
-                <div className="flex items-center gap-3">
-                  <span className="flex items-center gap-1" title="Stars">
-                    <Star className="w-3 h-3 text-amber-400" />
-                    <span>{repo.stargazers_count}</span>
-                  </span>
-                  <span className="flex items-center gap-1" title="Forks">
-                    <GitFork className="w-3 h-3 text-sky-400" />
-                    <span>{repo.forks_count}</span>
-                  </span>
+                          return (
+                            <div
+                              key={dIndex}
+                              title={tooltipText}
+                              className={`w-2 h-2 rounded-[2px] border transition-transform hover:scale-125 cursor-pointer ${getCellColor(
+                                day.level
+                              )}`}
+                            />
+                          );
+                        })}
+                      </div>
+                    ))}
+                  </div>
                 </div>
               </div>
             </div>
-          ))}
+
+            {/* Legend and Sync Note */}
+            <div className="flex items-center justify-between text-[11px] font-mono text-foreground/50 pt-2 border-t border-surface-border/40">
+              <div className="flex items-center gap-1.5">
+                <span className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse" />
+                <span>52-week activity calendar</span>
+              </div>
+              <div className="flex items-center gap-1">
+                <span className="text-[10px]">Less</span>
+                <span className="w-2 h-2 rounded-[2px] bg-surface-muted/70 border border-surface-border/50" />
+                <span className="w-2 h-2 rounded-[2px] bg-[#0e4429] border border-[#006d32]/50" />
+                <span className="w-2 h-2 rounded-[2px] bg-[#006d32] border border-[#26a641]/50" />
+                <span className="w-2 h-2 rounded-[2px] bg-[#26a641] border border-[#39d353]/60" />
+                <span className="w-2 h-2 rounded-[2px] bg-[#39d353] border border-[#39d353]" />
+                <span className="text-[10px]">More</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Column 2: Pinned 3 Core Repositories Stacked */}
+          <div className="lg:col-span-5 flex flex-col justify-between gap-3">
+            {repos.map((repo, idx) => (
+              <div
+                key={repo.name}
+                className="p-3.5 sm:p-4 rounded-xl border border-surface-border bg-surface/70 backdrop-blur-sm flex flex-col justify-between hover:border-accent/40 hover:bg-surface transition-all group flex-1"
+              >
+                <div className="space-y-1.5">
+                  <div className="flex items-start justify-between gap-2">
+                    <div className="flex items-center gap-2 font-mono text-xs font-bold text-foreground group-hover:text-accent transition-colors">
+                      <span className="text-[10px] text-accent font-mono px-1.5 py-0.5 rounded bg-accent/10 border border-accent/20">
+                        0{idx + 1}
+                      </span>
+                      <GitBranch className="w-3.5 h-3.5 text-accent" />
+                      <span className="truncate">{repo.name}</span>
+                    </div>
+                    <a
+                      href={repo.html_url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-foreground/40 hover:text-accent p-0.5"
+                      title={`Open ${repo.name} on GitHub`}
+                      aria-label={`Open ${repo.name} on GitHub`}
+                    >
+                      <ExternalLink className="w-3.5 h-3.5" />
+                    </a>
+                  </div>
+
+                  <p className="text-xs text-foreground/70 line-clamp-2 leading-relaxed font-sans">
+                    {repo.description}
+                  </p>
+                </div>
+
+                <div className="pt-2 border-t border-surface-border/50 flex items-center justify-between text-[11px] font-mono text-foreground/60 mt-2">
+                  <div className="flex items-center gap-1.5">
+                    <span className="w-1.5 h-1.5 rounded-full bg-accent inline-block" />
+                    <span>{repo.language}</span>
+                  </div>
+
+                  <div className="flex items-center gap-2.5">
+                    <span className="flex items-center gap-1" title="Stars">
+                      <Star className="w-3 h-3 text-amber-400" />
+                      <span>{repo.stargazers_count}</span>
+                    </span>
+                    <span className="flex items-center gap-1" title="Forks">
+                      <GitFork className="w-3 h-3 text-sky-400" />
+                      <span>{repo.forks_count}</span>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </section>

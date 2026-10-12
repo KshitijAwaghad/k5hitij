@@ -124,7 +124,6 @@ export const siteData: SiteConfig = {
   navLinks: [
     { label: "// projects", href: "#projects" },
     { label: "// skills", href: "#skills" },
-    { label: "// about", href: "#about" },
     { label: "// education", href: "#education" },
     { label: "// github", href: "#github" },
     { label: "// contact", href: "#contact" },
