@@ -119,7 +119,7 @@ export const siteData: SiteConfig = {
     github: "https://github.com/KshitijAwaghad",
     linkedin: "https://www.linkedin.com/in/kshitijawaghad",
     x: "https://x.com/k5hitij_5",
-    email: "mailto:kshitijavaghad255@gmail.com",
+    email: "https://mail.google.com/mail/?view=cm&fs=1&to=kshitijavaghad255@gmail.com",
   },
   navLinks: [
     { label: "// projects", href: "#projects" },

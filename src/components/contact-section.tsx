@@ -72,8 +72,11 @@ export function ContactSection() {
               </button>
 
               <a
-                href={`mailto:${siteData.owner.email}`}
+                href={`https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(siteData.owner.email)}`}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-md bg-accent text-black font-semibold hover:bg-emerald-400 transition-colors"
+                title="Compose email in Gmail"
               >
                 <Mail className="w-3.5 h-3.5" />
                 <span>Compose</span>
