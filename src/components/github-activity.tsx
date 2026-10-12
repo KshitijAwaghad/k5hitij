@@ -9,6 +9,8 @@ import {
   Flame,
   Activity,
   CheckCircle2,
+  CalendarDays,
+  TrendingUp,
 } from "lucide-react";
 
 export interface PinnedRepo {
@@ -64,7 +66,7 @@ const DEFAULT_PINNED_REPOS: PinnedRepo[] = [
   },
 ];
 
-// Active contribution days from Kshitij's authentic GitHub profile (Total: 23 contributions)
+// Active contribution days from Kshitij's authentic GitHub profile (Total: 23 contributions in 2026)
 const AUTHENTIC_ACTIVE_DAYS: Record<string, { count: number; level: number }> = {
   "2026-02-28": { count: 4, level: 3 },
   "2026-03-04": { count: 6, level: 4 },
@@ -80,7 +82,6 @@ const AUTHENTIC_ACTIVE_DAYS: Record<string, { count: number; level: number }> = 
 
 function generateFallbackContributions(): ContributionDay[] {
   const days: ContributionDay[] = [];
-  // 366 days leading up to today
   const end = new Date("2026-10-12T00:00:00Z");
   for (let i = 365; i >= 0; i--) {
     const d = new Date(end);
@@ -187,18 +188,36 @@ export async function GitHubActivity() {
     getContributionsData(),
   ]);
 
-  // Build 53-week matrix (Sunday = row 0, Saturday = row 6)
-  const firstDate = contributions[0] ? new Date(contributions[0].date + "T00:00:00Z") : new Date();
-  const startDay = firstDate.getUTCDay();
+  // Monthly breakdown for 2026
+  const months2026 = [
+    "2026-02",
+    "2026-03",
+    "2026-04",
+    "2026-05",
+    "2026-06",
+    "2026-07",
+    "2026-08",
+    "2026-09",
+    "2026-10",
+  ];
 
+  const monthBars = months2026.map((m) => {
+    const count = contributions
+      .filter((d) => d.date.startsWith(m))
+      .reduce((s, d) => s + d.count, 0);
+    const label = new Date(m + "-01T00:00:00Z").toLocaleString("en-US", {
+      month: "short",
+      timeZone: "UTC",
+    });
+    return { month: m, label, count };
+  });
+
+  // Active period calendar: 2026-02-15 to today (covers 100% of all 2026 commits without empty padding)
+  const activeDays = contributions.filter((d) => d.date >= "2026-02-15");
   const weeks: Array<Array<ContributionDay | null>> = [];
   let currentWeek: Array<ContributionDay | null> = [];
 
-  for (let i = 0; i < startDay; i++) {
-    currentWeek.push(null);
-  }
-
-  for (const day of contributions) {
+  for (const day of activeDays) {
     currentWeek.push(day);
     if (currentWeek.length === 7) {
       weeks.push(currentWeek);
@@ -213,7 +232,7 @@ export async function GitHubActivity() {
     weeks.push(currentWeek);
   }
 
-  // Calculate month header positions
+  // Calculate month header positions over the active 35-week window
   const months: Array<{ weekIndex: number; label: string }> = [];
   let lastMonth = "";
   weeks.forEach((w, idx) => {
@@ -257,7 +276,7 @@ export async function GitHubActivity() {
               Live GitHub Activity & Core Repositories
             </h2>
             <p className="text-sm font-mono text-foreground/60 max-w-xl">
-              Authentic contribution telemetry and pinned repositories for @{siteData.owner.handle}.
+              Authentic contribution telemetry, commit cadence, and pinned repositories for @{siteData.owner.handle}.
             </p>
           </div>
 
@@ -273,80 +292,143 @@ export async function GitHubActivity() {
           </a>
         </div>
 
-        {/* 2-Column Layout: Column 1 = Contribution Heatmap, Column 2 = 3 Pinned Projects */}
+        {/* 2-Column Responsive Dashboard */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-stretch">
-          {/* Column 1: Contribution Heatmap */}
+          {/* Column 1: GitHub Contribution Activity Dashboard */}
           <div className="lg:col-span-7 p-4 sm:p-5 rounded-xl border border-surface-border bg-surface/70 backdrop-blur-sm flex flex-col justify-between space-y-4 shadow-sm">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-surface-border/60 font-mono text-xs">
+            {/* Top Bar with Live Beacon */}
+            <div className="flex items-center justify-between pb-3 border-b border-surface-border/60 font-mono text-xs">
               <div className="flex items-center gap-2">
                 <Activity className="w-4 h-4 text-accent" />
-                <span className="font-semibold text-foreground">Contribution Heatmap</span>
+                <span className="font-semibold text-foreground">Contribution Dashboard</span>
                 <span className="px-2 py-0.5 rounded text-[10px] bg-accent/10 text-accent border border-accent/20 flex items-center gap-1">
                   <CheckCircle2 className="w-3 h-3 text-accent" />
                   <span>{isLive ? "Live Synced" : "Verified Data"}</span>
                 </span>
               </div>
 
-              <div className="flex items-center gap-2 text-foreground/70 text-xs font-sans">
+              <div className="flex items-center gap-1.5 text-foreground/70 text-xs font-sans">
                 <Flame className="w-3.5 h-3.5 text-accent" />
                 <span>
-                  <strong className="font-bold text-foreground font-mono">{totalCount}</strong> commits in last year
+                  <strong className="font-bold text-foreground font-mono">{totalCount}</strong> commits in 2026
                 </span>
               </div>
             </div>
 
-            {/* GitHub-Authentic Heatmap Grid with Month & Day Labels */}
-            <div className="overflow-x-auto pb-1">
-              <div className="min-w-[590px] select-none font-mono text-[9px]">
-                {/* Month Header Row */}
-                <div className="flex pl-6 mb-1 text-foreground/50 h-3.5 relative">
-                  {months.map((m, idx) => (
-                    <div
-                      key={idx}
-                      className="absolute"
-                      style={{ left: `${m.weekIndex * 11 + 24}px` }}
-                    >
-                      {m.label}
-                    </div>
-                  ))}
+            {/* High-Signal Metrics Grid (3 Tiles) */}
+            <div className="grid grid-cols-3 gap-2 font-mono text-xs">
+              <div className="p-2.5 rounded-lg border border-surface-border/70 bg-surface-muted/40 space-y-0.5">
+                <span className="text-[10px] text-foreground/50 block font-mono">TOTAL COMMITS</span>
+                <div className="flex items-center gap-1.5">
+                  <span className="text-base font-bold text-accent font-sans">{totalCount}</span>
+                  <span className="text-[10px] text-foreground/40 font-mono">/ year</span>
                 </div>
+              </div>
+              <div className="p-2.5 rounded-lg border border-surface-border/70 bg-surface-muted/40 space-y-0.5">
+                <span className="text-[10px] text-foreground/50 block font-mono">ACTIVE MILESTONES</span>
+                <div className="flex items-center gap-1.5">
+                  <span className="text-base font-bold text-foreground font-sans">10 days</span>
+                  <CalendarDays className="w-3 h-3 text-foreground/40" />
+                </div>
+              </div>
+              <div className="p-2.5 rounded-lg border border-surface-border/70 bg-surface-muted/40 space-y-0.5">
+                <span className="text-[10px] text-foreground/50 block font-mono">PEAK CADENCE</span>
+                <div className="flex items-center gap-1.5">
+                  <span className="text-base font-bold text-emerald-400 font-sans">March</span>
+                  <span className="text-[10px] text-foreground/40 font-mono">(6 pushes)</span>
+                </div>
+              </div>
+            </div>
 
-                {/* Days + Grid Matrix */}
-                <div className="flex gap-1.5">
-                  {/* Day Labels (Mon, Wed, Fri) */}
-                  <div className="flex flex-col justify-between text-foreground/40 text-[8px] pt-0.5 pb-0.5 w-5 select-none leading-none">
-                    <span className="h-2"></span>
-                    <span className="h-2">Mon</span>
-                    <span className="h-2"></span>
-                    <span className="h-2">Wed</span>
-                    <span className="h-2"></span>
-                    <span className="h-2">Fri</span>
-                    <span className="h-2"></span>
+            {/* Monthly Commit Velocity Bar Graph */}
+            <div className="p-3 rounded-lg border border-surface-border/70 bg-surface-muted/30 space-y-2">
+              <div className="flex items-center justify-between text-[11px] font-mono text-foreground/70">
+                <div className="flex items-center gap-1.5">
+                  <TrendingUp className="w-3.5 h-3.5 text-accent" />
+                  <span>Monthly Commit Velocity (2026)</span>
+                </div>
+                <span className="text-accent text-[10px]">Peak: 6 commits / mo</span>
+              </div>
+
+              <div className="grid grid-cols-9 gap-1.5 items-end h-12 pt-1 select-none">
+                {monthBars.map((m) => (
+                  <div key={m.month} className="flex flex-col items-center gap-1 h-full justify-end group">
+                    <div
+                      title={`${m.label} 2026: ${m.count} commits`}
+                      style={{ height: `${m.count > 0 ? Math.max(20, (m.count / 6) * 100) : 10}%` }}
+                      className={`w-full max-w-[28px] rounded-t-sm transition-all ${
+                        m.count > 0
+                          ? "bg-accent group-hover:bg-emerald-400"
+                          : "bg-surface-border/60 group-hover:bg-surface-border"
+                      }`}
+                    />
+                    <span className="text-[9px] font-mono text-foreground/50 group-hover:text-foreground">
+                      {m.label}
+                    </span>
                   </div>
+                ))}
+              </div>
+            </div>
 
-                  {/* Weeks Columns */}
-                  <div className="inline-flex gap-[2px]">
-                    {weeks.map((week, wIndex) => (
-                      <div key={wIndex} className="flex flex-col gap-[2px]">
-                        {week.map((day, dIndex) => {
-                          if (!day) {
-                            return <div key={dIndex} className="w-2 h-2 opacity-0" />;
-                          }
+            {/* Breathable Heatmap Grid: Spans 35 Weeks (Feb – Oct 2026) */}
+            <div className="space-y-1.5 pt-1">
+              <div className="flex items-center justify-between text-[11px] font-mono text-foreground/60">
+                <span>Daily Contribution Heatmap</span>
+                <span className="text-accent text-[10px]">Feb 15 – Oct 12, 2026</span>
+              </div>
 
-                          const tooltipText = `${day.count === 0 ? "No contributions" : `${day.count} contribution${day.count > 1 ? "s" : ""}`} on ${formatDate(day.date)}`;
-
-                          return (
-                            <div
-                              key={dIndex}
-                              title={tooltipText}
-                              className={`w-2 h-2 rounded-[2px] border transition-transform hover:scale-125 cursor-pointer ${getCellColor(
-                                day.level
-                              )}`}
-                            />
-                          );
-                        })}
+              <div className="overflow-x-auto pb-1">
+                <div className="min-w-[480px] select-none font-mono text-[9px]">
+                  {/* Month Header Row */}
+                  <div className="flex pl-6 mb-1 text-foreground/50 h-3.5 relative">
+                    {months.map((m, idx) => (
+                      <div
+                        key={idx}
+                        className="absolute"
+                        style={{ left: `${m.weekIndex * 13 + 24}px` }}
+                      >
+                        {m.label}
                       </div>
                     ))}
+                  </div>
+
+                  {/* Days + Grid Matrix */}
+                  <div className="flex gap-1.5">
+                    {/* Day Labels */}
+                    <div className="flex flex-col justify-between text-foreground/40 text-[8px] pt-0.5 pb-0.5 w-5 select-none leading-none">
+                      <span className="h-2"></span>
+                      <span className="h-2">Mon</span>
+                      <span className="h-2"></span>
+                      <span className="h-2">Wed</span>
+                      <span className="h-2"></span>
+                      <span className="h-2">Fri</span>
+                      <span className="h-2"></span>
+                    </div>
+
+                    {/* Weeks Columns */}
+                    <div className="inline-flex gap-[3px]">
+                      {weeks.map((week, wIndex) => (
+                        <div key={wIndex} className="flex flex-col gap-[3px]">
+                          {week.map((day, dIndex) => {
+                            if (!day) {
+                              return <div key={dIndex} className="w-2.5 h-2.5 opacity-0" />;
+                            }
+
+                            const tooltipText = `${day.count === 0 ? "No contributions" : `${day.count} contribution${day.count > 1 ? "s" : ""}`} on ${formatDate(day.date)}`;
+
+                            return (
+                              <div
+                                key={dIndex}
+                                title={tooltipText}
+                                className={`w-2.5 h-2.5 rounded-[2px] border transition-transform hover:scale-125 cursor-pointer ${getCellColor(
+                                  day.level
+                                )}`}
+                              />
+                            );
+                          })}
+                        </div>
+                      ))}
+                    </div>
                   </div>
                 </div>
               </div>
@@ -354,17 +436,17 @@ export async function GitHubActivity() {
 
             {/* Legend and Sync Note */}
             <div className="flex items-center justify-between text-[11px] font-mono text-foreground/50 pt-2 border-t border-surface-border/40">
-              <div className="flex items-center gap-1.5">
+              <span className="flex items-center gap-1.5">
                 <span className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse" />
-                <span>52-week activity calendar</span>
-              </div>
+                <span>Verified @KshitijAwaghad profile activity</span>
+              </span>
               <div className="flex items-center gap-1">
                 <span className="text-[10px]">Less</span>
-                <span className="w-2 h-2 rounded-[2px] bg-surface-muted/70 border border-surface-border/50" />
-                <span className="w-2 h-2 rounded-[2px] bg-[#0e4429] border border-[#006d32]/50" />
-                <span className="w-2 h-2 rounded-[2px] bg-[#006d32] border border-[#26a641]/50" />
-                <span className="w-2 h-2 rounded-[2px] bg-[#26a641] border border-[#39d353]/60" />
-                <span className="w-2 h-2 rounded-[2px] bg-[#39d353] border border-[#39d353]" />
+                <span className="w-2.5 h-2.5 rounded-[2px] bg-surface-muted/70 border border-surface-border/50" />
+                <span className="w-2.5 h-2.5 rounded-[2px] bg-[#0e4429] border border-[#006d32]/50" />
+                <span className="w-2.5 h-2.5 rounded-[2px] bg-[#006d32] border border-[#26a641]/50" />
+                <span className="w-2.5 h-2.5 rounded-[2px] bg-[#26a641] border border-[#39d353]/60" />
+                <span className="w-2.5 h-2.5 rounded-[2px] bg-[#39d353] border border-[#39d353]" />
                 <span className="text-[10px]">More</span>
               </div>
             </div>

@@ -255,7 +255,7 @@ export const siteData: SiteConfig = {
       tech: ["Next.js", "TypeScript", "Tailwind CSS", "Framer Motion", "cmdk"],
       links: {
         github: "https://github.com/KshitijAwaghad/k5hitij.dev",
-        live: "https://k5hitij.dev",
+        live: "https://k5hitijdev.vercel.app",
       },
       caseStudy: {
         problem: "Developer portfolios often suffer from either generic template aesthetics or bloated animations that hinder readability. The goal was to build a fast, keyboard-first, terminal-inspired site that communicates engineering competence within 3 seconds.",
