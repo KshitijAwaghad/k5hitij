@@ -62,7 +62,7 @@ export function CommandPalette() {
 
   const copyEmail = async () => {
     try {
-      await navigator.clipboard.writeText(siteData.owner.email.replace("TODO: add real email (e.g. ", "").replace(")", ""));
+      await navigator.clipboard.writeText(siteData.owner.email);
       setCopied(true);
       setTimeout(() => {
         setCopied(false);

@@ -123,12 +123,10 @@ export const siteData: SiteConfig = {
   },
   navLinks: [
     { label: "// projects", href: "#projects" },
-    { label: "// architecture", href: "#architecture" },
     { label: "// skills", href: "#skills" },
     { label: "// about", href: "#about" },
-    { label: "// timeline", href: "#timeline" },
+    { label: "// education", href: "#education" },
     { label: "// github", href: "#github" },
-    { label: "// notes", href: "#notes" },
     { label: "// contact", href: "#contact" },
   ],
   skills: [
@@ -303,34 +301,6 @@ export const siteData: SiteConfig = {
         architectureSummary: "JAMstack architecture leveraging server-side rendered catalog pages with client-side reactive state for the shopping cart.",
       },
     },
-    {
-      slug: "issue-tracker",
-      title: "Issue Tracker for Engineering Teams",
-      tagline: "Lightweight, keyboard-first defect and sprint tracking application",
-      description: "TODO: add real description for Issue Tracker. A developer-centric task and bug tracking tool built for quick ticket logging, tag filtering, and Kanban sprint boards.",
-      role: "Full-Stack Developer",
-      category: "Systems",
-      featured: false,
-      tech: ["TypeScript", "React", "PostgreSQL", "Node.js", "Tailwind CSS"],
-      links: {
-        github: "https://github.com/KshitijAwaghad", // TODO: add exact project repo link
-        live: undefined, // TODO: add live deployment link if available
-      },
-      caseStudy: {
-        problem: "TODO: add detailed problem statement. Enterprise issue trackers are frequently bloated and slow. Built as a snappy, keyboard-friendly alternative for small engineering groups.",
-        roleDetails: "TODO: add detailed role description. Implemented drag-and-drop Kanban state management and relational schema for sprints and issues.",
-        keyFeatures: [
-          "Interactive Kanban board with drag-and-drop column transitions",
-          "Search & filter by priority, assignee, and custom tag labels",
-          "Keyboard shortcuts for rapid issue creation and modal inspection",
-        ],
-        challengesLearned: [
-          "Managing complex client-side optimistic drag-and-drop reordering without race conditions.",
-          "Designing an index strategy for multi-column query filtering (status, priority, project_id).",
-        ],
-        architectureSummary: "Client-heavy interface with robust state management talking to a normalized relational PostgreSQL backend.",
-      },
-    },
   ],
   timeline: [
     {
@@ -348,71 +318,6 @@ export const siteData: SiteConfig = {
       skills: ["Data Structures", "Algorithms", "DBMS", "Operating Systems"],
       isCurrent: true,
     },
-    {
-      id: "exp-1",
-      type: "experience",
-      role: "Full-Stack Developer Intern / Project Collaborator",
-      organization: "TODO: add real organization / freelance / project title",
-      location: "India (Remote / On-site)",
-      period: "TODO: add real timeframe",
-      description: [
-        "TODO: add real responsibility 1 (e.g., Developed responsive full-stack features using TypeScript and React).",
-        "TODO: add real responsibility 2 (e.g., Designed REST APIs, optimized SQL queries, and integrated third-party services).",
-        "Collaborated in agile team sprints, code reviews, and Git version control workflows.",
-      ],
-      skills: ["TypeScript", "React", "Node.js", "Git", "REST APIs"],
-      isCurrent: false,
-    },
   ],
-  notes: [
-    {
-      slug: "type-safe-full-stack-typescript",
-      title: "Building End-to-End Type Safety from Database to Client Component",
-      date: "Oct 2024",
-      readTime: "4 min read",
-      excerpt: "How pairing Prisma or Kysely with Zod and Next.js Route Handlers eliminates runtime payload discrepancies across the stack.",
-      tags: ["TypeScript", "Next.js", "Architecture"],
-      content: `Type safety is often treated as a compile-time convenience, but in modern full-stack development, it is your first line of defense against data corruption and runtime crashes.
-
-When architecting full-stack TypeScript applications, the biggest point of failure traditionally occurs at network boundaries. The client sends a JSON payload; the server expects a certain shape; the database requires specific constraints. If any of these get out of sync, runtime errors occur.
-
-### The Solution: The Single Source of Truth Pipeline
-1. **Schema Definition**: Define runtime constraints with validation libraries (such as Zod).
-2. **Database Models**: Align database ORM definitions with strict types.
-3. **Contract Invariants**: Infer request/response types directly from validators rather than writing manual interfaces.
-
-By locking down boundaries with inferred types and automated validation, refactoring becomes effortless and runtime undefined errors are drastically reduced.`,
-    },
-    {
-      slug: "optimistic-ui-patterns",
-      title: "Optimistic UI: Delivering Sub-50ms Perceived Speed in Web Apps",
-      date: "Sep 2024",
-      readTime: "5 min read",
-      excerpt: "A practical guide to optimistic updates, rollback state handling, and why perceived latency matters more than network time.",
-      tags: ["React", "UX", "Performance"],
-      content: `Users judge speed not by network round-trip times, but by how quickly an interface responds to their intent. When a user clicks a button to add an expense or toggle an issue state, waiting 300ms for a network round-trip feels sluggish.
-
-### What is Optimistic UI?
-Optimistic UI assumes the network request will succeed. It immediately mutates the client state and renders the updated view, while dispatching the background asynchronous mutation.
-
-### The Core Rules of Optimistic Design
-1. **Immediate Feedback**: Render the desired end-state within the current frame (under 16ms).
-2. **Explicit Rollback**: Keep a snapshot of the prior state. If the server responds with a 4xx or 5xx, revert smoothly and present a toast notification.
-3. **Idempotent Identifiers**: Use client-generated UUIDs so temporary items can be matched once the server returns the persistent identifier.`,
-    },
-    {
-      slug: "clean-git-workflows-for-solo-devs",
-      title: "Pragmatic Git Workflows: Clean History Even When Coding Solo",
-      date: "Aug 2024",
-      readTime: "3 min read",
-      excerpt: "Why atomic commits, descriptive PR summaries, and rebase strategies pay massive dividends as projects scale.",
-      tags: ["Git", "Workflow", "DevOps"],
-      content: `Many solo developers treat Git as a cloud backup: single-word commit messages like "fix" or "wip", and dumping dozens of unrelated changes into a single push.
-
-Treating personal repositories with professional rigor transforms code maintenance:
-- **Atomic Commits**: Each commit does exactly one thing. If you need to bisect a bug later, you can pinpoint the offending line in seconds.
-- **Conventional Commits**: Prefixes like \`feat:\`, \`fix:\`, \`refactor:\`, and \`chore:\` make commit history instantly readable.
-- **Self-Review Pull Requests**: Branching before major features and reviewing your own diff before merging forces you to catch dead code, console logs, and edge cases before they hit main.`,
-    },
-  ],
+  notes: [],
 };

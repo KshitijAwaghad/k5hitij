@@ -11,13 +11,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.8,
   }));
 
-  const noteRoutes = siteData.notes.map((note) => ({
-    url: `${baseUrl}/notes/${note.slug}`,
-    lastModified: new Date(),
-    changeFrequency: "monthly" as const,
-    priority: 0.7,
-  }));
-
   return [
     {
       url: baseUrl,
@@ -26,6 +19,5 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 1.0,
     },
     ...projectRoutes,
-    ...noteRoutes,
   ];
 }
