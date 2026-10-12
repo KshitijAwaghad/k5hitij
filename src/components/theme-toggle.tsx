@@ -4,6 +4,8 @@ import * as React from "react";
 import { useTheme } from "next-themes";
 import { Sun, Moon } from "lucide-react";
 
+import { playSwitch } from "@/lib/sound";
+
 const emptySubscribe = () => () => {};
 
 export function ThemeToggle() {
@@ -28,7 +30,10 @@ export function ThemeToggle() {
   return (
     <button
       type="button"
-      onClick={() => setTheme(isDark ? "light" : "dark")}
+      onClick={() => {
+        playSwitch();
+        setTheme(isDark ? "light" : "dark");
+      }}
       className="p-1.5 rounded-md text-foreground/70 hover:text-foreground hover:bg-surface-muted transition-colors border border-surface-border/80 focus-visible:ring-1 focus-visible:ring-accent"
       aria-label={`Switch to ${isDark ? "light" : "dark"} theme`}
       title={`Switch to ${isDark ? "light" : "dark"} theme`}

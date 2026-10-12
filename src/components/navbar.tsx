@@ -5,6 +5,7 @@ import Link from "next/link";
 import { siteData } from "@/data/site";
 import { ThemeToggle } from "./theme-toggle";
 import { Terminal, Command, Menu, X, ArrowUpRight } from "lucide-react";
+import { playClick } from "@/lib/sound";
 
 const emptySubscribe = () => () => {};
 
@@ -17,10 +18,12 @@ export function Navbar() {
   );
 
   const openPalette = () => {
+    playClick();
     window.dispatchEvent(new CustomEvent("open-command-palette"));
   };
 
   const openTerminal = () => {
+    playClick();
     window.dispatchEvent(new CustomEvent("toggle-mini-terminal"));
   };
 

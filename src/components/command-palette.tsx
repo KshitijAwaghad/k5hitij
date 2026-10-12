@@ -16,6 +16,7 @@ import {
   ExternalLink,
   ArrowRight,
 } from "lucide-react";
+import { playClick, playSuccess, playSwitch } from "@/lib/sound";
 
 export function CommandPalette() {
   const [open, setOpen] = React.useState(false);
@@ -45,6 +46,7 @@ export function CommandPalette() {
   }, []);
 
   const navigateTo = (url: string) => {
+    playClick();
     setOpen(false);
     if (url.startsWith("http") || url.startsWith("mailto:")) {
       window.open(url, "_blank", "noopener,noreferrer");
@@ -63,6 +65,7 @@ export function CommandPalette() {
   const copyEmail = async () => {
     try {
       await navigator.clipboard.writeText(siteData.owner.email);
+      playSuccess();
       setCopied(true);
       setTimeout(() => {
         setCopied(false);
@@ -74,11 +77,13 @@ export function CommandPalette() {
   };
 
   const toggleTheme = () => {
+    playSwitch();
     setTheme(resolvedTheme === "dark" ? "light" : "dark");
     setOpen(false);
   };
 
   const openTerminal = () => {
+    playClick();
     setOpen(false);
     window.dispatchEvent(new CustomEvent("toggle-mini-terminal"));
   };

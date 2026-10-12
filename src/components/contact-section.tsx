@@ -10,6 +10,7 @@ import {
   Check,
   ArrowUpRight,
 } from "lucide-react";
+import { playClick, playSuccess } from "@/lib/sound";
 
 export function ContactSection() {
   const [copied, setCopied] = React.useState(false);
@@ -17,6 +18,7 @@ export function ContactSection() {
   const handleCopy = async () => {
     try {
       await navigator.clipboard.writeText(siteData.owner.email);
+      playSuccess();
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     } catch {
@@ -75,6 +77,7 @@ export function ContactSection() {
                 href={`https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(siteData.owner.email)}`}
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={() => playClick()}
                 className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-md bg-accent text-black font-semibold hover:bg-emerald-400 transition-colors"
                 title="Compose email in Gmail"
               >
@@ -91,6 +94,7 @@ export function ContactSection() {
               href={siteData.owner.resumeUrl}
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() => playClick()}
               className="flex items-center justify-between p-3.5 rounded-lg border border-surface-border bg-surface hover:border-accent/40 hover:bg-surface-muted transition-all font-mono text-xs group"
               title="Open Resume in new tab"
             >
@@ -109,6 +113,7 @@ export function ContactSection() {
                 href={siteData.socials.github}
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={() => playClick()}
                 className="p-2 rounded hover:text-accent hover:bg-surface-muted transition-colors flex items-center gap-1.5 text-foreground/80"
                 title="GitHub"
               >
@@ -120,6 +125,7 @@ export function ContactSection() {
                 href={siteData.socials.linkedin}
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={() => playClick()}
                 className="p-2 rounded hover:text-accent hover:bg-surface-muted transition-colors flex items-center gap-1.5 text-foreground/80"
                 title="LinkedIn"
               >
@@ -131,6 +137,7 @@ export function ContactSection() {
                 href={siteData.socials.x}
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={() => playClick()}
                 className="p-2 rounded hover:text-accent hover:bg-surface-muted transition-colors flex items-center gap-1.5 text-foreground/80"
                 title="X (Twitter)"
               >

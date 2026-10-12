@@ -3,6 +3,7 @@
 import * as React from "react";
 import { siteData } from "@/data/site";
 import { Layout, Server, Database, Wrench, Layers, CheckCircle2 } from "lucide-react";
+import { playKeypress, playClick } from "@/lib/sound";
 
 export function TechStack() {
   const [activeCategory, setActiveCategory] = React.useState<string>("all");
@@ -45,7 +46,10 @@ export function TechStack() {
               <button
                 key={cat}
                 type="button"
-                onClick={() => setActiveCategory(cat)}
+                onClick={() => {
+                  playClick();
+                  setActiveCategory(cat);
+                }}
                 className={`px-3 py-1 rounded transition-all capitalize ${
                   activeCategory === cat
                     ? "bg-foreground text-background font-semibold shadow-sm"
@@ -76,21 +80,33 @@ export function TechStack() {
                 </span>
               </div>
 
-              {/* Tag Chips */}
+              {/* Tag Chips with Contextual Proof Tooltips */}
               <div className="flex flex-wrap gap-2 pt-1">
                 {catGroup.skills.map((skill) => (
                   <div
                     key={skill.name}
-                    className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md font-mono text-xs border transition-all ${
+                    onMouseEnter={() => playKeypress()}
+                    className={`relative group/chip inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md font-mono text-xs border transition-all cursor-default select-none ${
                       skill.featured
-                        ? "border-accent/30 bg-accent/5 text-foreground hover:border-accent hover:bg-accent/10"
-                        : "border-surface-border bg-surface-muted/60 text-foreground/80 hover:border-surface-border/80 hover:text-foreground"
+                        ? "border-accent/30 bg-accent/5 text-foreground hover:border-accent hover:bg-accent/15"
+                        : "border-surface-border bg-surface-muted/60 text-foreground/80 hover:border-surface-border/80 hover:text-foreground hover:bg-surface-muted"
                     }`}
                   >
                     {skill.featured && (
-                      <span className="w-1.5 h-1.5 rounded-full bg-accent inline-block" />
+                      <span className="w-1.5 h-1.5 rounded-full bg-accent inline-block shrink-0 animate-pulse" />
                     )}
                     <span>{skill.name}</span>
+
+                    {/* Contextual Proof Tooltip on Hover */}
+                    {skill.usage && (
+                      <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-max max-w-[240px] px-2.5 py-1.5 rounded-md bg-[#090c10] border border-accent/40 text-foreground shadow-2xl text-[10px] font-sans leading-snug pointer-events-none opacity-0 translate-y-1 group-hover/chip:opacity-100 group-hover/chip:translate-y-0 transition-all z-30">
+                        <div className="text-[9px] font-mono text-accent uppercase tracking-wider mb-0.5 font-bold">
+                          Project Proof:
+                        </div>
+                        <p className="text-foreground/90">{skill.usage}</p>
+                        <div className="absolute top-full left-1/2 -translate-x-1/2 -mt-px border-4 border-transparent border-t-[#090c10]" />
+                      </div>
+                    )}
                   </div>
                 ))}
               </div>
@@ -102,7 +118,7 @@ export function TechStack() {
         <div className="mt-5 p-3.5 rounded-lg border border-surface-border/60 bg-surface-muted/30 flex items-center justify-between gap-4 font-mono text-xs text-foreground/60">
           <div className="flex items-center gap-2">
             <CheckCircle2 className="w-4 h-4 text-accent" />
-            <span>Green dot indicates primary daily-driver tools in production workflows</span>
+            <span>Hover any tool to view concrete repository proof • Green dot indicates daily-driver</span>
           </div>
           <span className="hidden sm:inline text-[11px]">Strict TypeScript • No arbitrary 90% bars</span>
         </div>

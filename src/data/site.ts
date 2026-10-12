@@ -11,6 +11,7 @@ export interface SkillCategory {
     name: string;
     icon?: string;
     featured?: boolean;
+    usage?: string;
   }>;
 }
 
@@ -132,46 +133,46 @@ export const siteData: SiteConfig = {
     {
       category: "Frontend",
       skills: [
-        { name: "React 19 / 18", featured: true },
-        { name: "Next.js (App Router)", featured: true },
-        { name: "TypeScript", featured: true },
-        { name: "Tailwind CSS", featured: true },
-        { name: "Framer Motion" },
-        { name: "HTML5 & Semantic Markup" },
-        { name: "CSS3 / Modern CSS" },
-        { name: "Responsive & Accessible UI" },
+        { name: "React 19 / 18", featured: true, usage: "Server & Client components in k5hitij.dev and ExpenseWise" },
+        { name: "Next.js (App Router)", featured: true, usage: "App Router, SSR, ISR & route handlers across all 3 apps" },
+        { name: "TypeScript", featured: true, usage: "Strict end-to-end type contracts from DB schemas to UI props" },
+        { name: "Tailwind CSS", featured: true, usage: "Design systems, customized tokens, and dark mode ergonomics" },
+        { name: "Framer Motion", usage: "Restrained micro-animations, modals, and transition states" },
+        { name: "HTML5 & Semantic Markup", usage: "Clean semantic hierarchy and screen reader accessible elements" },
+        { name: "CSS3 / Modern CSS", usage: "CSS variables, gradients, glassmorphism, and responsive layout grids" },
+        { name: "Responsive & Accessible UI", usage: "Mobile-first layouts, aria attributes, and prefers-reduced-motion" },
       ],
     },
     {
       category: "Backend",
       skills: [
-        { name: "Node.js", featured: true },
-        { name: "Express.js" },
-        { name: "Next.js Route Handlers", featured: true },
-        { name: "RESTful APIs", featured: true },
-        { name: "Server Actions" },
-        { name: "Authentication (JWT / OAuth / Auth.js)" },
+        { name: "Node.js", featured: true, usage: "Core runtime for microservices, API servers, and build tooling" },
+        { name: "Express.js", usage: "REST routing, controllers, and middleware pipeline in CampusResolve" },
+        { name: "Next.js Route Handlers", featured: true, usage: "Transactional API endpoints and validation in ExpenseWise" },
+        { name: "RESTful APIs", featured: true, usage: "Structured JSON request/response contracts and status codes" },
+        { name: "Server Actions", usage: "Form mutations with optimistic UI updates and zero boilerplate" },
+        { name: "Authentication (JWT / OAuth / Auth.js)", usage: "Role-based access control and token security in CampusResolve" },
       ],
     },
     {
       category: "Database",
       skills: [
-        { name: "PostgreSQL", featured: true },
-        { name: "MongoDB" },
-        { name: "Prisma ORM", featured: true },
-        { name: "SQL Schema Design" },
-        { name: "Redis Caching" },
+        { name: "PostgreSQL", featured: true, usage: "Normalized financial ledger with composite indexes in ExpenseWise" },
+        { name: "MongoDB", usage: "Document store for grievance complaint lifecycle in CampusResolve" },
+        { name: "Prisma ORM", featured: true, usage: "Schema migrations, relational models, and type-safe database queries" },
+        { name: "SQL Schema Design", usage: "Foreign key constraints, ACID transactions, and query plans" },
+        { name: "Redis Caching", usage: "Memoizing monthly aggregated reports to avoid database latency" },
       ],
     },
     {
       category: "Tools & DevOps",
       skills: [
-        { name: "Git & GitHub", featured: true },
-        { name: "Vercel Deployment", featured: true },
-        { name: "Docker (Basics)" },
-        { name: "Postman" },
-        { name: "Linux / Bash" },
-        { name: "VS Code" },
+        { name: "Git & GitHub", featured: true, usage: "Disciplined commit cadence, semantic versioning, and feature branching" },
+        { name: "Vercel Deployment", featured: true, usage: "Edge network deployments, preview branches, and CI/CD triggers" },
+        { name: "Docker (Basics)", usage: "Containerized local environments and reproducible dev setups" },
+        { name: "Postman", usage: "API endpoint test suites, payload assertions, and mock environments" },
+        { name: "Linux / Bash", usage: "Shell scripting, zsh customization, permissions, and server tools" },
+        { name: "VS Code", usage: "Configured workspace, editor settings, and TypeScript language server" },
       ],
     },
   ],

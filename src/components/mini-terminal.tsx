@@ -4,6 +4,7 @@ import * as React from "react";
 import { siteData } from "@/data/site";
 import { useTheme } from "next-themes";
 import { Terminal, X, Minus, Sparkles, Send } from "lucide-react";
+import { playClick, playKeypress, playSuccess } from "@/lib/sound";
 
 interface TerminalHistoryItem {
   id: string;
@@ -83,6 +84,12 @@ export function MiniTerminal() {
 
     const lower = cmd.toLowerCase();
     let outputContent: React.ReactNode;
+
+    if (lower === "hire-me" || lower === "sudo hire-me") {
+      playSuccess();
+    } else {
+      playClick();
+    }
 
     switch (lower) {
       case "help":
@@ -216,12 +223,14 @@ export function MiniTerminal() {
       executeCommand(inputVal);
     } else if (e.key === "ArrowUp") {
       e.preventDefault();
+      playClick();
       if (commandList.length === 0) return;
       const nextIdx = commandIndex === -1 ? commandList.length - 1 : Math.max(0, commandIndex - 1);
       setCommandIndex(nextIdx);
       setInputVal(commandList[nextIdx] || "");
     } else if (e.key === "ArrowDown") {
       e.preventDefault();
+      playClick();
       if (commandIndex === -1) return;
       const nextIdx = commandIndex + 1;
       if (nextIdx >= commandList.length) {
@@ -231,6 +240,8 @@ export function MiniTerminal() {
         setCommandIndex(nextIdx);
         setInputVal(commandList[nextIdx] || "");
       }
+    } else if (!e.ctrlKey && !e.metaKey && !e.altKey && e.key.length === 1) {
+      playKeypress();
     }
   };
 
@@ -256,7 +267,10 @@ export function MiniTerminal() {
         <div className="flex items-center gap-2">
           <button
             type="button"
-            onClick={() => setIsMinimized(!isMinimized)}
+            onClick={() => {
+              playClick();
+              setIsMinimized(!isMinimized);
+            }}
             className="p-1 rounded text-foreground/50 hover:text-foreground hover:bg-surface transition-colors"
             title="Minimize"
           >
@@ -264,7 +278,10 @@ export function MiniTerminal() {
           </button>
           <button
             type="button"
-            onClick={() => setIsOpen(false)}
+            onClick={() => {
+              playClick();
+              setIsOpen(false);
+            }}
             className="p-1 rounded text-foreground/50 hover:text-rose-400 hover:bg-surface transition-colors"
             title="Close"
           >

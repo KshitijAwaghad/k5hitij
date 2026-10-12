@@ -5,6 +5,7 @@ import Link from "next/link";
 import { siteData, Project } from "@/data/site";
 import { GithubIcon } from "@/components/icons";
 import { ExternalLink, ArrowRight, FolderGit2, Sparkles } from "lucide-react";
+import { playClick } from "@/lib/sound";
 
 export function ProjectsSection() {
   return (
@@ -85,6 +86,7 @@ function ProjectCard({ project }: { project: Project }) {
       <div className="px-4 py-2.5 border-t border-surface-border/70 bg-surface-muted/20 flex items-center justify-between gap-3 text-xs font-mono">
         <Link
           href={`/projects/${project.slug}`}
+          onClick={() => playClick()}
           className="text-foreground/80 hover:text-accent flex items-center gap-1 transition-colors font-medium text-[11px]"
         >
           <span>Case Study</span>
@@ -98,6 +100,7 @@ function ProjectCard({ project }: { project: Project }) {
               href={project.links.github}
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() => playClick()}
               className="p-1 rounded border border-surface-border bg-surface text-foreground/70 hover:text-accent hover:border-accent/40 transition-colors"
               title="View on GitHub"
               aria-label={`Open ${project.title} on GitHub`}
@@ -110,6 +113,7 @@ function ProjectCard({ project }: { project: Project }) {
               href={project.links.live}
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() => playClick()}
               className="p-1 rounded border border-surface-border bg-surface text-foreground/70 hover:text-accent hover:border-accent/40 transition-colors"
               title="Open Live Deployment"
               aria-label={`Open ${project.title} live deployment`}
