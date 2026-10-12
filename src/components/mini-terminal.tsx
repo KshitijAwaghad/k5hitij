@@ -12,6 +12,39 @@ interface TerminalHistoryItem {
   output: React.ReactNode;
 }
 
+function MatrixEffect() {
+  const [lines, setLines] = React.useState<string[]>([]);
+  React.useEffect(() => {
+    let count = 0;
+    const interval = setInterval(() => {
+      count++;
+      const katakana = "ｦｱｳｴｵｶｷｹｺｻｼｽｾｿﾀﾂﾃﾅﾆﾇﾈﾊﾋﾎﾏﾐﾑﾒﾓﾔﾕﾗﾘﾜ101010101";
+      const line = Array.from({ length: 24 }, () =>
+        katakana[Math.floor(Math.random() * katakana.length)]
+      ).join(" ");
+      setLines((prev) => [...prev.slice(-6), line]);
+      if (count > 12) {
+        clearInterval(interval);
+      }
+    }, 120);
+    return () => clearInterval(interval);
+  }, []);
+
+  return (
+    <div className="font-mono text-[10px] text-emerald-400 leading-tight space-y-0.5 select-none py-1">
+      <div className="text-accent font-semibold pb-1">[INITIALIZING MATRIX PROTOCOL...]</div>
+      {lines.map((l, i) => (
+        <div key={i} className="tracking-widest opacity-90">{l}</div>
+      ))}
+      {lines.length >= 6 && (
+        <div className="text-foreground/70 pt-1 text-[11px]">
+          🟢 Wake up, Neo... matrix stream completed.
+        </div>
+      )}
+    </div>
+  );
+}
+
 export function MiniTerminal() {
   const [isOpen, setIsOpen] = React.useState(false);
   const [isMinimized, setIsMinimized] = React.useState(false);
@@ -94,17 +127,20 @@ export function MiniTerminal() {
     switch (lower) {
       case "help":
         outputContent = (
-          <div className="space-y-1 text-foreground/80 font-mono text-xs">
+          <div className="space-y-1.5 text-foreground/80 font-mono text-xs">
             <p className="text-accent">Available commands:</p>
             <div className="grid grid-cols-2 gap-1 text-[11px]">
               <div><strong className="text-foreground">help</strong> - list commands</div>
               <div><strong className="text-foreground">about</strong> - summary of background</div>
               <div><strong className="text-foreground">projects</strong> - list projects</div>
               <div><strong className="text-foreground">skills</strong> - list tech stack</div>
-              <div><strong className="text-foreground">contact</strong> - reach out</div>
+              <div><strong className="text-foreground">neofetch</strong> - system specs & ASCII</div>
+              <div><strong className="text-foreground">matrix</strong> - enter the Matrix</div>
+              <div><strong className="text-foreground">quote</strong> - engineering wisdom</div>
               <div><strong className="text-foreground">theme</strong> - switch light/dark mode</div>
+              <div><strong className="text-foreground">contact</strong> - reach out</div>
               <div><strong className="text-foreground">clear</strong> - clear screen</div>
-              <div><strong className="text-emerald-400">sudo hire-me</strong> - fast-track hiring</div>
+              <div className="col-span-2"><strong className="text-emerald-400">sudo hire-me</strong> - fast-track hiring</div>
             </div>
           </div>
         );
@@ -176,6 +212,66 @@ export function MiniTerminal() {
         setHistory([]);
         setInputVal("");
         return;
+
+      case "neofetch":
+        outputContent = (
+          <div className="space-y-2 text-[11px] font-mono">
+            <div className="flex flex-col sm:flex-row gap-4 items-start">
+              <pre className="text-accent text-[10px] leading-tight select-none">
+{`  _   _____ _     _ _   _ _ 
+ | | / ____| |   (_) | (_) |
+ | |( (___ | |__  _| |_ _| |
+ | | \\___ \\| '_ \\| | __| | |
+ |_| ____) | | | | | |_| | |
+    |_____/|_| |_|_|\\__|_|_|`}
+              </pre>
+              <div className="space-y-0.5 text-foreground/80 leading-snug">
+                <p><span className="text-accent font-bold">{siteData.owner.handle}</span>@<span className="text-accent font-bold">portfolio</span></p>
+                <div className="h-px bg-surface-border my-1" />
+                <p><span className="text-accent font-semibold">OS:</span> Windows 11 / Linux (WSL2)</p>
+                <p><span className="text-accent font-semibold">Host:</span> {siteData.owner.name}&apos;s Workspace</p>
+                <p><span className="text-accent font-semibold">Kernel:</span> Next.js 16.4.0 (Turbopack)</p>
+                <p><span className="text-accent font-semibold">Uptime:</span> 2023 - Present (Active)</p>
+                <p><span className="text-accent font-semibold">Shell:</span> zsh 5.9 / powershell</p>
+                <p><span className="text-accent font-semibold">Editor:</span> VS Code / Cursor</p>
+                <p><span className="text-accent font-semibold">Stack:</span> TypeScript, React 19, Prisma, PostgreSQL</p>
+              </div>
+            </div>
+            <div className="flex items-center gap-1.5 pt-1">
+              <span className="w-3 h-2 rounded-xs bg-slate-800 inline-block" />
+              <span className="w-3 h-2 rounded-xs bg-rose-500 inline-block" />
+              <span className="w-3 h-2 rounded-xs bg-emerald-400 inline-block" />
+              <span className="w-3 h-2 rounded-xs bg-amber-400 inline-block" />
+              <span className="w-3 h-2 rounded-xs bg-sky-400 inline-block" />
+              <span className="w-3 h-2 rounded-xs bg-purple-400 inline-block" />
+              <span className="w-3 h-2 rounded-xs bg-teal-400 inline-block" />
+              <span className="w-3 h-2 rounded-xs bg-slate-200 inline-block" />
+            </div>
+          </div>
+        );
+        break;
+
+      case "matrix":
+        outputContent = <MatrixEffect />;
+        break;
+
+      case "quote":
+      case "curl quote":
+        const quotes = [
+          { text: "Talk is cheap. Show me the code.", author: "Linus Torvalds" },
+          { text: "Simplicity is prerequisite for reliability.", author: "Edsger W. Dijkstra" },
+          { text: "Make it work, make it right, make it fast.", author: "Kent Beck" },
+          { text: "Any fool can write code that a computer can understand. Good programmers write code that humans can understand.", author: "Martin Fowler" },
+          { text: "Controlling complexity is the essence of computer programming.", author: "Brian Kernighan" },
+        ];
+        const picked = quotes[Math.floor(Math.random() * quotes.length)];
+        outputContent = (
+          <div className="p-2.5 rounded border border-surface-border bg-surface-muted/60 space-y-1 text-[11px]">
+            <p className="italic text-foreground/90">&ldquo;{picked.text}&rdquo;</p>
+            <p className="text-accent text-[10px] font-semibold text-right">— {picked.author}</p>
+          </div>
+        );
+        break;
 
       case "sudo hire-me":
       case "hire-me":
