@@ -5,7 +5,7 @@ import { siteData } from "@/data/site";
 import { GithubIcon, LinkedinIcon, XIcon } from "@/components/icons";
 import {
   Mail,
-  FileDown,
+  FileText,
   Copy,
   Check,
   ArrowUpRight,
@@ -86,13 +86,15 @@ export function ContactSection() {
             {/* Resume Button */}
             <a
               href={siteData.owner.resumeUrl}
-              download
+              target="_blank"
+              rel="noopener noreferrer"
               className="flex items-center justify-between p-3.5 rounded-lg border border-surface-border bg-surface hover:border-accent/40 hover:bg-surface-muted transition-all font-mono text-xs group"
+              title="Open Resume in new tab"
             >
               <div className="flex items-center gap-2.5">
-                <FileDown className="w-4 h-4 text-accent" />
+                <FileText className="w-4 h-4 text-accent" />
                 <span className="font-semibold text-foreground group-hover:text-accent transition-colors">
-                  Download Resume (PDF)
+                  View Resume (PDF)
                 </span>
               </div>
               <ArrowUpRight className="w-3.5 h-3.5 text-foreground/40 group-hover:text-accent group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />

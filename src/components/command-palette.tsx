@@ -237,7 +237,6 @@ export function CommandPalette() {
 
           {/* Footer Bar */}
           <div className="px-4 py-2 border-t border-surface-border bg-surface-muted/50 flex items-center justify-between text-[11px] text-foreground/50 font-mono">
-            <span>Use ↑↓ to navigate, Enter to select</span>
             <span>ESC to close</span>
           </div>
         </Command>

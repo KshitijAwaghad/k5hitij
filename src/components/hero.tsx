@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import { siteData } from "@/data/site";
-import { ArrowRight, Mail, Copy, Check, Terminal as TerminalIcon, Sparkles } from "lucide-react";
+import { ArrowRight, Mail, Copy, Check, Sparkles, FileText, ArrowUpRight } from "lucide-react";
 
 const emptySubscribe = () => () => {};
 
@@ -138,15 +138,17 @@ export function Hero() {
                 <span>Contact Me</span>
               </a>
 
-              <button
-                type="button"
-                onClick={() => window.dispatchEvent(new CustomEvent("toggle-mini-terminal"))}
-                className="hidden sm:inline-flex items-center gap-2 px-3.5 py-2.5 rounded-md border border-surface-border/70 text-foreground/60 hover:text-foreground font-mono text-xs transition-colors"
-                title="Launch Mini Terminal"
+              <a
+                href={siteData.owner.resumeUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-md border border-surface-border bg-surface hover:bg-surface-muted hover:border-accent/40 text-foreground font-mono text-xs font-medium transition-all group"
+                title="Open Resume in new tab"
               >
-                <TerminalIcon className="w-3.5 h-3.5" />
-                <span>` terminal</span>
-              </button>
+                <FileText className="w-3.5 h-3.5 text-accent" />
+                <span>Resume</span>
+                <ArrowUpRight className="w-3.5 h-3.5 text-foreground/40 group-hover:text-accent group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+              </a>
             </div>
           </div>
 

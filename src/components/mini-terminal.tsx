@@ -22,7 +22,7 @@ export function MiniTerminal() {
       output: (
         <div className="space-y-1 text-foreground/80">
           <p className="text-accent font-semibold">
-            {siteData.owner.handle} developer console v1.0
+            {siteData.owner.handle} developer console v2.5
           </p>
           <p className="text-foreground/60 text-[11px]">
             Type <span className="text-accent font-bold">help</span> to see available commands or press <kbd className="px-1 py-0.5 rounded bg-surface-muted text-accent border border-surface-border">`</kbd> to dismiss.
