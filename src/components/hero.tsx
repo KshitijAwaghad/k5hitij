@@ -68,19 +68,19 @@ export function Hero() {
   };
 
   return (
-    <section className="relative pt-12 pb-20 md:pt-20 md:pb-28 overflow-hidden">
+    <section className="relative pt-8 pb-10 md:pt-12 md:pb-14 overflow-hidden">
       {/* Background glow orb */}
       <div
-        className="absolute top-1/4 left-1/4 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-accent/10 rounded-full blur-3xl pointer-events-none -z-10"
+        className="absolute top-1/4 left-1/4 -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-accent/10 rounded-full blur-3xl pointer-events-none -z-10"
         aria-hidden="true"
       />
 
       <div className="max-w-container mx-auto px-4 sm:px-6">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-8 items-center">
           {/* Left Column: Typed terminal intro & positioning */}
-          <div className="lg:col-span-7 space-y-6">
+          <div className="lg:col-span-7 space-y-4">
             {/* Terminal prompt badge */}
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-md border border-surface-border bg-surface-muted/60 font-mono text-xs text-foreground/80">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md border border-surface-border bg-surface-muted/60 font-mono text-xs text-foreground/80">
               <span className="text-accent">&gt;</span>
               <span className="text-foreground/90 font-medium">{activeCommand}</span>
               <span className="inline-block w-2 h-4 bg-accent animate-pulse" aria-hidden="true" />

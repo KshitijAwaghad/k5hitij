@@ -22,11 +22,11 @@ export function TechStack() {
       : siteData.skills.filter((s) => s.category === activeCategory);
 
   return (
-    <section id="skills" className="py-16 md:py-24 border-t border-surface-border/60 scroll-mt-14">
+    <section id="skills" className="py-8 md:py-12 border-t border-surface-border/60 scroll-mt-14">
       <div className="max-w-container mx-auto px-4 sm:px-6">
         {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
-          <div className="space-y-2">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-6">
+          <div className="space-y-1.5">
             <div className="font-mono text-xs text-accent uppercase tracking-wider flex items-center gap-2">
               <span>{"// skills & technologies"}</span>
               <span className="h-px w-8 bg-accent/40" />
@@ -59,14 +59,14 @@ export function TechStack() {
         </div>
 
         {/* Categories Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
           {filteredSkills.map((catGroup) => (
             <div
               key={catGroup.category}
-              className="p-6 rounded-xl border border-surface-border bg-surface/60 backdrop-blur-sm space-y-4 hover:border-surface-border/90 hover:bg-surface/80 transition-all group"
+              className="p-4 sm:p-5 rounded-xl border border-surface-border bg-surface/60 backdrop-blur-sm space-y-3.5 hover:border-surface-border/90 hover:bg-surface/80 transition-all group"
             >
               {/* Category Header */}
-              <div className="flex items-center justify-between pb-3 border-b border-surface-border/60">
+              <div className="flex items-center justify-between pb-2.5 border-b border-surface-border/60">
                 <div className="flex items-center gap-2.5 font-mono text-sm font-semibold text-foreground">
                   {categoryIcons[catGroup.category] || <Layers className="w-4 h-4 text-accent" />}
                   <span>{catGroup.category}</span>
@@ -99,7 +99,7 @@ export function TechStack() {
         </div>
 
         {/* Note on Proficiency */}
-        <div className="mt-8 p-4 rounded-lg border border-surface-border/60 bg-surface-muted/30 flex items-center justify-between gap-4 font-mono text-xs text-foreground/60">
+        <div className="mt-5 p-3.5 rounded-lg border border-surface-border/60 bg-surface-muted/30 flex items-center justify-between gap-4 font-mono text-xs text-foreground/60">
           <div className="flex items-center gap-2">
             <CheckCircle2 className="w-4 h-4 text-accent" />
             <span>Green dot indicates primary daily-driver tools in production workflows</span>

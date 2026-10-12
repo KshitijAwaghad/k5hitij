@@ -25,23 +25,23 @@ export function ContactSection() {
   };
 
   return (
-    <section id="contact" className="py-16 md:py-24 border-t border-surface-border/60 scroll-mt-14">
+    <section id="contact" className="py-8 md:py-12 border-t border-surface-border/60 scroll-mt-14">
       <div className="max-w-container mx-auto px-4 sm:px-6">
         {/* Section Header */}
-        <div className="space-y-2 mb-10 text-center max-w-xl mx-auto">
+        <div className="space-y-1.5 mb-6 text-center max-w-xl mx-auto">
           <div className="font-mono text-xs text-accent uppercase tracking-wider inline-flex items-center gap-2">
             <span>{"// get in touch"}</span>
           </div>
-          <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-foreground font-sans">
+          <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-foreground font-sans">
             Let&apos;s Connect & Build
           </h2>
-          <p className="text-sm font-mono text-foreground/60 leading-relaxed">
+          <p className="text-xs sm:text-sm font-mono text-foreground/60 leading-relaxed">
             Open to software engineering internships and collaborative projects. Drop a line or connect on socials.
           </p>
         </div>
 
         {/* Compact, High-Signal Contact Bar */}
-        <div className="max-w-2xl mx-auto rounded-xl border border-surface-border bg-surface/80 backdrop-blur-sm p-6 sm:p-8 space-y-6 shadow-sm">
+        <div className="max-w-2xl mx-auto rounded-xl border border-surface-border bg-surface/80 backdrop-blur-sm p-5 sm:p-6 space-y-4 shadow-sm">
           {/* Email Click-to-Copy Row */}
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-4 rounded-lg border border-accent/20 bg-accent/5 font-mono text-xs">
             <div className="space-y-1">

@@ -8,10 +8,10 @@ import { ExternalLink, ArrowRight, FolderGit2, Sparkles } from "lucide-react";
 
 export function ProjectsSection() {
   return (
-    <section id="projects" className="py-16 md:py-24 border-t border-surface-border/60 scroll-mt-14">
+    <section id="projects" className="py-8 md:py-12 border-t border-surface-border/60 scroll-mt-14">
       <div className="max-w-container mx-auto px-4 sm:px-6">
         {/* Section Header */}
-        <div className="space-y-2 mb-10">
+        <div className="space-y-1.5 mb-6">
           <div className="font-mono text-xs text-accent uppercase tracking-wider flex items-center gap-2">
             <span>{"// featured work"}</span>
             <span className="h-px w-8 bg-accent/40" />
@@ -25,7 +25,7 @@ export function ProjectsSection() {
         </div>
 
         {/* Projects Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
           {siteData.projects.map((project) => (
             <ProjectCard key={project.slug} project={project} />
           ))}
@@ -40,7 +40,7 @@ function ProjectCard({ project }: { project: Project }) {
     <div className="group rounded-xl border border-surface-border bg-surface/70 backdrop-blur-sm overflow-hidden flex flex-col justify-between hover:border-accent/40 hover:shadow-lg transition-all duration-300">
       <div>
         {/* Card Header */}
-        <div className="px-5 py-3 border-b border-surface-border bg-surface-muted/40 flex items-center justify-between font-mono text-xs text-foreground/60">
+        <div className="px-4 py-2.5 border-b border-surface-border bg-surface-muted/40 flex items-center justify-between font-mono text-xs text-foreground/60">
           <div className="flex items-center gap-2">
             <FolderGit2 className="w-3.5 h-3.5 text-accent" />
             <span className="truncate">{project.slug}</span>
@@ -54,7 +54,7 @@ function ProjectCard({ project }: { project: Project }) {
         </div>
 
         {/* Card Content */}
-        <div className="p-5 space-y-3">
+        <div className="p-4 space-y-2.5">
           <Link
             href={`/projects/${project.slug}`}
             className="text-base font-bold font-sans text-foreground group-hover:text-accent transition-colors flex items-center justify-between"
@@ -68,7 +68,7 @@ function ProjectCard({ project }: { project: Project }) {
           </p>
 
           {/* Tech Tags */}
-          <div className="flex flex-wrap gap-1.5 pt-2">
+          <div className="flex flex-wrap gap-1.5 pt-1.5">
             {project.tech.map((t) => (
               <span
                 key={t}
@@ -82,7 +82,7 @@ function ProjectCard({ project }: { project: Project }) {
       </div>
 
       {/* Card Action Footer */}
-      <div className="px-5 py-3 border-t border-surface-border/70 bg-surface-muted/20 flex items-center justify-between gap-3 text-xs font-mono">
+      <div className="px-4 py-2.5 border-t border-surface-border/70 bg-surface-muted/20 flex items-center justify-between gap-3 text-xs font-mono">
         <Link
           href={`/projects/${project.slug}`}
           className="text-foreground/80 hover:text-accent flex items-center gap-1 transition-colors font-medium text-[11px]"

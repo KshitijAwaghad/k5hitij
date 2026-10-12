@@ -244,11 +244,11 @@ export async function GitHubActivity() {
   };
 
   return (
-    <section id="github" className="py-16 md:py-24 border-t border-surface-border/60 scroll-mt-14">
+    <section id="github" className="py-8 md:py-12 border-t border-surface-border/60 scroll-mt-14">
       <div className="max-w-container mx-auto px-4 sm:px-6">
         {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
-          <div className="space-y-2">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-6">
+          <div className="space-y-1.5">
             <div className="font-mono text-xs text-accent uppercase tracking-wider flex items-center gap-2">
               <span>{"// git telemetry"}</span>
               <span className="h-px w-8 bg-accent/40" />
@@ -265,7 +265,7 @@ export async function GitHubActivity() {
             href={siteData.socials.github}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-3.5 py-2 rounded-md border border-surface-border bg-surface-muted/50 hover:border-accent/40 hover:text-accent font-mono text-xs text-foreground/80 transition-colors self-start md:self-auto"
+            className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-md border border-surface-border bg-surface-muted/50 hover:border-accent/40 hover:text-accent font-mono text-xs text-foreground/80 transition-colors self-start md:self-auto"
           >
             <GithubIcon className="w-4 h-4" />
             <span>github.com/KshitijAwaghad</span>
@@ -274,7 +274,7 @@ export async function GitHubActivity() {
         </div>
 
         {/* Authentic Contribution Graph Box */}
-        <div className="p-6 sm:p-8 rounded-xl border border-surface-border bg-surface/70 backdrop-blur-sm space-y-6 mb-10 shadow-sm">
+        <div className="p-4 sm:p-6 rounded-xl border border-surface-border bg-surface/70 backdrop-blur-sm space-y-4 mb-6 shadow-sm">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-surface-border/60 font-mono text-xs">
             <div className="flex items-center gap-2.5">
               <Activity className="w-4 h-4 text-accent" />
@@ -371,13 +371,13 @@ export async function GitHubActivity() {
         </div>
 
         {/* Pinned 3 Core Repositories Cards in Exact Order */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
           {repos.map((repo, idx) => (
             <div
               key={repo.name}
-              className="p-5 rounded-xl border border-surface-border bg-surface/70 backdrop-blur-sm flex flex-col justify-between hover:border-accent/40 hover:bg-surface transition-all group"
+              className="p-4 sm:p-5 rounded-xl border border-surface-border bg-surface/70 backdrop-blur-sm flex flex-col justify-between hover:border-accent/40 hover:bg-surface transition-all group"
             >
-              <div className="space-y-3">
+              <div className="space-y-2.5">
                 <div className="flex items-start justify-between gap-2">
                   <div className="flex items-center gap-2 font-mono text-xs font-bold text-foreground group-hover:text-accent transition-colors">
                     <span className="text-[10px] text-accent font-mono px-1.5 py-0.5 rounded bg-accent/10 border border-accent/20">
@@ -403,7 +403,7 @@ export async function GitHubActivity() {
                 </p>
               </div>
 
-              <div className="pt-4 border-t border-surface-border/60 flex items-center justify-between text-[11px] font-mono text-foreground/60 mt-4">
+              <div className="pt-3 border-t border-surface-border/60 flex items-center justify-between text-[11px] font-mono text-foreground/60 mt-3">
                 <div className="flex items-center gap-2">
                   <span className="w-2 h-2 rounded-full bg-accent inline-block" />
                   <span>{repo.language}</span>
