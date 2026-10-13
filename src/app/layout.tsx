@@ -21,9 +21,9 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://k5hitij.dev"),
+  metadataBase: new URL("https://k5hitij.com"),
   title: {
-    default: `${siteData.owner.name} (${siteData.owner.handle}) | ${siteData.owner.role}`,
+    default: `${siteData.owner.handle}`,
     template: `%s | ${siteData.owner.name}`,
   },
   description: siteData.owner.headline,
@@ -42,7 +42,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://k5hitij.dev",
+    url: "https://k5hitij.com",
     title: `${siteData.owner.name} | ${siteData.owner.role}`,
     description: siteData.owner.headline,
     siteName: `${siteData.owner.name} Portfolio`,
@@ -102,7 +102,7 @@ export default function RootLayout({
                 name: siteData.owner.name,
                 alternateName: siteData.owner.handle,
                 jobTitle: siteData.owner.role,
-                url: "https://k5hitij.dev",
+                url: "https://k5hitij.com",
                 sameAs: [
                   siteData.socials.github,
                   siteData.socials.linkedin,
