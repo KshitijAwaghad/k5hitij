@@ -1,6 +1,6 @@
-# k5hitij.dev — Personal Portfolio & Systems Showcase
+# k5hitij — Personal Portfolio & Systems Showcase
 
-> Modern, developer-centric personal portfolio website for **Kshitij Awaghad (k5hitij)** — Full-Stack Developer based in India. Built with Next.js 16 App Router, strict TypeScript, Tailwind CSS v3.4, and Framer Motion.
+> Modern, developer-centric personal portfolio website for **Kshitij Awaghad** — Full-Stack Developer based in India. Built with Next.js 16 App Router, strict TypeScript, Tailwind CSS v3.4, and Framer Motion.
 
 ---
 
