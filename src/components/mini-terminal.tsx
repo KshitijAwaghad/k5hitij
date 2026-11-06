@@ -230,7 +230,7 @@ export function MiniTerminal() {
                 <div className="h-px bg-surface-border my-1" />
                 <p><span className="text-accent font-semibold">OS:</span> Windows 11 / Linux (WSL2)</p>
                 <p><span className="text-accent font-semibold">Host:</span> {siteData.owner.name}&apos;s Workspace</p>
-                <p><span className="text-accent font-semibold">Kernel:</span> Next.js 16.4.0 (Turbopack)</p>
+                <p><span className="text-accent font-semibold">Kernel:</span> Next.js 16.4.5 (Turbopack)</p>
                 <p><span className="text-accent font-semibold">Uptime:</span> 2023 - Present (Active)</p>
                 <p><span className="text-accent font-semibold">Shell:</span> zsh 5.9 / powershell</p>
                 <p><span className="text-accent font-semibold">Editor:</span> VS Code / Cursor</p>
