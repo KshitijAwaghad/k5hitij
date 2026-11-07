@@ -108,22 +108,3 @@ Open [`src/data/site.ts`](./src/data/site.ts) to update:
 4. Click **Deploy**. Vercel will automatically build the static pages and edge/serverless routes.
 
 ---
-
-## 📋 Owner TODO Checklist
-
-Before sharing with recruiters, fill in the following marked `TODO` fields in [`src/data/site.ts`](./src/data/site.ts):
-
-- [ ] **Contact Email**: Replace `siteData.owner.email` with your real personal/work email.
-- [ ] **Resume PDF**: Add your latest resume PDF into `public/resume.pdf` and set `resumeUrl: "/resume.pdf"` in `siteData.owner.resumeUrl`.
-- [ ] **Education Details**:
-  - [ ] University / College name in `siteData.timeline[0].organization`
-  - [ ] Degree name & specialization in `siteData.timeline[0].role`
-- [ ] **Experience Details**:
-  - [ ] Real employer or organization title in `siteData.timeline[1].organization`
-  - [ ] Accurate date range in `siteData.timeline[1].period`
-  - [ ] Key contributions in `siteData.timeline[1].description`
-- [ ] **Project Details**:
-  - [ ] **ExpenseWise**: Update repository link when public (`siteData.projects[0].links.github`).
-  - [ ] **Smart Campus Grievance Management System**: Description & role details verified.
-  - [ ] **Sai Shoes**: Description & role details verified.
-  - [ ] **Issue Tracker for Engineering Teams**: Fill in description, features, and repository link once created.
